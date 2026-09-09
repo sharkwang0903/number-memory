@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#eef5f7">
+  <title>數字瞬間記憶</title>
+  <link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="screen home-screen is-active" data-screen="home" aria-labelledby="game-title">
+      <div class="home-mark" aria-hidden="true">NM</div>
+      <p class="eyebrow">NUMBER MEMORY</p>
+      <h1 id="game-title">數字瞬間記憶</h1>
+      <p class="intro">
+        記住畫面中的數字。<br>
+        數字消失後，依照原順序輸入答案。<br>
+        每答對一題，下一題會增加一位數。
+      </p>
+      <button class="primary-button" type="button" data-action="start-game">開始遊戲</button>
+    </section>
+
+    <section class="screen prepare-screen" data-screen="prepare" aria-labelledby="prepare-title" hidden>
+      <div class="status-line"><span class="status-dot"></span>準備下一個挑戰</div>
+      <p class="eyebrow">目前挑戰</p>
+      <h2 id="prepare-title" class="digits-heading"><span data-bind="digits">4</span> 位數字</h2>
+      <p class="screen-copy">準備好後，數字將短暫出現。</p>
+      <button class="primary-button" type="button" data-action="ready">準備完成</button>
+      <button class="text-button" type="button" data-action="back-home">回到首頁</button>
+    </section>
+
+    <section class="screen blank-screen" data-screen="blank" aria-label="即將顯示數字" hidden></section>
+
+    <section class="screen display-screen" data-screen="showing" aria-live="off" hidden>
+      <div class="memory-number" data-bind="target-number"></div>
+    </section>
+
+    <section class="screen answer-screen" data-screen="answer" aria-labelledby="answer-title" hidden>
+      <p class="eyebrow">YOUR TURN</p>
+      <h2 id="answer-title">請輸入剛才的數字</h2>
+      <p class="screen-copy answer-hint">依照你記得的順序輸入。</p>
+
+      <div class="answer-display" data-bind="answer-display" aria-label="目前輸入答案"></div>
+      <p class="input-feedback" data-bind="input-feedback" role="status" aria-live="polite"></p>
+
+      <div class="keypad" aria-label="虛擬數字鍵盤">
+        <button class="key-button" type="button" data-key="7">7</button>
+        <button class="key-button" type="button" data-key="8">8</button>
+        <button class="key-button" type="button" data-key="9">9</button>
+        <button class="key-button" type="button" data-key="4">4</button>
+        <button class="key-button" type="button" data-key="5">5</button>
+        <button class="key-button" type="button" data-key="6">6</button>
+        <button class="key-button" type="button" data-key="1">1</button>
+        <button class="key-button" type="button" data-key="2">2</button>
+        <button class="key-button" type="button" data-key="3">3</button>
+        <button class="key-button key-button--muted" type="button" data-key="backspace" aria-label="刪除最後一位">⌫</button>
+        <button class="key-button" type="button" data-key="0">0</button>
+        <button class="key-button key-button--confirm" type="button" data-key="enter" aria-label="提交答案">✓</button>
+      </div>
+      <p class="keyboard-note">也可以使用實體鍵盤輸入</p>
+    </section>
+
+    <section class="screen message-screen" data-screen="success" aria-labelledby="success-title" hidden>
+      <div class="result-icon result-icon--success" aria-hidden="true">✓</div>
+      <p class="eyebrow">WELL REMEMBERED</p>
+      <h2 id="success-title">挑戰成功！</h2>
+      <p class="message-detail"><span data-bind="passed-digits">4</span> 位數字通過</p>
+      <button class="primary-button" type="button" data-action="next-round">挑戰 <span data-bind="next-digits">5</span> 位數字</button>
+    </section>
+
+    <section class="screen message-screen" data-screen="retry" aria-labelledby="retry-title" hidden>
+      <div class="result-icon result-icon--retry" aria-hidden="true">↺</div>
+      <p class="eyebrow">KEEP GOING</p>
+      <h2 id="retry-title">差一點！</h2>
+      <p class="message-detail">你還有一次挑戰機會。</p>
+      <button class="primary-button" type="button" data-action="retry-round">再次挑戰 <span data-bind="retry-digits">4</span> 位數字</button>
+    </section>
+
+    <section class="screen message-screen result-screen" data-screen="result" aria-labelledby="result-title" hidden>
+      <div class="result-icon result-icon--result" aria-hidden="true">✦</div>
+      <p class="eyebrow">YOUR MEMORY JOURNEY</p>
+      <h2 id="result-title">挑戰結束</h2>
+      <p class="score-label">最大數字記憶長度</p>
+      <p class="final-score"><span data-bind="final-score">0</span> <span>位數字</span></p>
+      <p class="record-badge" data-bind="record-badge" hidden>新的個人紀錄！</p>
+      <div class="title-card">
+        <p class="title-label">你的稱號</p>
+        <p class="memory-title" data-bind="memory-title">記憶見習生</p>
+        <p class="title-quote" data-bind="title-quote">旅程才正要開始。</p>
+      </div>
+      <div class="result-actions">
+        <button class="primary-button" type="button" data-action="restart-game">再次挑戰</button>
+        <button class="text-button" type="button" data-action="back-home">回到首頁</button>
+      </div>
+      <p class="personal-best">個人最佳：<span data-bind="personal-best">0</span> 位數字</p>
+    </section>
+  </main>
+
+  <script src="storage.js?v=1"></script>
+  <script src="game.js?v=1"></script>
+  <script src="ui.js?v=1"></script>
+</body>
+</html>
