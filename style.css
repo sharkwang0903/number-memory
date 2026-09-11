@@ -225,7 +225,6 @@ h2 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-  touch-action: manipulation;
 }
 
 .key-button {
@@ -236,9 +235,16 @@ h2 {
   color: var(--ink);
   font-size: clamp(21px, 5vw, 26px);
   box-shadow: 0 3px 10px rgba(53, 87, 103, 0.04);
-  touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   transition: background 150ms ease, transform 150ms ease, border-color 150ms ease;
+}
+
+.app-shell,
+.screen,
+.keypad,
+.key-button {
+  touch-action: manipulation;
+  touch-action: pan-x pan-y pinch-zoom;
 }
 
 .key-button:hover { border-color: var(--blue); background: var(--blue-wash); }
